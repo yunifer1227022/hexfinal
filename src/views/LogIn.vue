@@ -38,20 +38,26 @@
 <script setup>
 import axios from 'axios';
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 const user = reactive({
   username: '',
   password: '',
 });
+const router = useRouter();
 
 function signIn() {
     const api =`${import.meta.env.VITE_APP_API}admin/signin`;
     // console.log(api)
     axios.post(api, user)
         .then((res)=> {
-			const { token, expired } = res.data;
-			document.cookie=`hexToken=${token}; expires=${new Date(expired)};`
-			// console.log(token, expired);
-            // console.log(res);
+			if(res.data.success) {
+				const { token, expired } = res.data;
+				document.cookie=`hexToken=${token}; expires=${new Date(expired)};`
+				// console.log(token, expired);
+            	// console.log(res);
+				router.push('/dashboard/products');
+			}
+
         })
 		.catch((error)=> {console.log(error)})
 }
