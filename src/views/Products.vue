@@ -1,12 +1,12 @@
 <template>
     <table class="table mt-4">
   <thead>
-    <tr>
-      <th width="120">分類</th>
-      <th>產品名稱</th>
-      <th width="120">原價</th>
-      <th width="120">售價</th>
-      <th width="100">是否啟用</th>
+    <tr v-for="item in products" :key="item.id">
+      <th width="120">{{item.category}}</th>
+      <th>{{item.title}}</th>
+      <th width="120">{{item.origin_price}}</th>
+      <th width="120">{{item.price}}</th>
+      <th width="100">{{item.is_enabled}}</th>
       <th width="200">編輯</th>
     </tr>
   </thead>
@@ -40,6 +40,7 @@ import { UseProductStore } from '../stores/UseProductStore.js'
 
 const productStore = UseProductStore();
 productStore.getProducts();
+console.log(productStore.products.value);
    
 
 </script>
